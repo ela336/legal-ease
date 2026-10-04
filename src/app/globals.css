@@ -13,8 +13,23 @@
   }
 }
 
-.car-enter {
+.carenterright {
   animation: carEnter 1.2s ease-out forwards;
+}
+@keyframes carEnterleft {
+  from {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.carenterleft {
+  animation: carEnterleft 1.2s ease-out forwards;
 }
 @keyframes textEnter {
   from {

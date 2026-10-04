@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from "react";
@@ -6,11 +7,9 @@ import { usePathname } from "next/navigation";
 
 import {
   Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
   Button,
-  Input,
+  InputGroup,
+  Label,
   Avatar,
 } from "@heroui/react";
 
@@ -31,7 +30,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
- 
+  // Replace this later with your actual auth/session user
   const user = null;
 
   const isActive = (path) => {
@@ -53,7 +52,7 @@ const Navbar = () => {
       href: "/lawyers",
       icon: Briefcase,
     },
-     {
+    {
       name: "Dashboard",
       href: "/dashboard",
       icon: LayoutHeader,
@@ -61,16 +60,16 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-[#292929] bg-[#0D0D0D] ">
+    <nav className="sticky top-0 z-50 border-b border-[#292929] bg-[#0D0D0D]">
       <div className="textenter mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
-        {/* ================= LOGO ================= */}
+        
         <Link
           href="/"
           className="flex items-center gap-2"
           onClick={() => setIsMenuOpen(false)}
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#C9A227]">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#C9A227] ">
             <Briefcase
               width={20}
               height={20}
@@ -98,7 +97,7 @@ const Navbar = () => {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative  flex items-center gap-2 py-5 text-md font-medium transition ${
+                className={`relative flex items-center gap-2 py-5 text-md font-medium transition ${
                   isActive(link.href)
                     ? "text-[#C9A227]"
                     : "text-gray-300 hover:text-white"
@@ -116,29 +115,25 @@ const Navbar = () => {
           })}
         </div>
 
-       
+        {/* ================= RIGHT SIDE ================= */}
         <div className="flex items-center gap-3">
 
-          {/* Search */}
+          {/* ================= DESKTOP SEARCH ================= */}
           <div className="hidden md:block">
-            <Input
-              size="sm"
-              placeholder="Search lawyers..."
-              startContent={
+            <InputGroup className="w-[200px]">
+              <InputGroup.Prefix>
                 <Magnifier
                   width={17}
                   height={17}
                   className="text-gray-500"
                 />
-              }
-              classNames={{
-                base: "w-[200px]",
-                inputWrapper:
-                  "bg-[#181818] border border-[#333] shadow-none",
-                input:
-                  "text-white placeholder:text-gray-500",
-              }}
-            />
+              </InputGroup.Prefix>
+
+              <InputGroup.Input
+                placeholder="Search lawyers..."
+                className="h-9 bg-[#181818] text-sm text-white placeholder:text-gray-500"
+              />
+            </InputGroup>
           </div>
 
           {/* ================= LOGGED OUT ================= */}
@@ -151,20 +146,21 @@ const Navbar = () => {
                 Login
               </Link>
 
-              <Button
-                as={Link}
+              <Link
                 href="/register"
-                size="sm"
-                className="hidden bg-[#C9A227] px-5 font-semibold text-[#0D0D0D] hover:bg-[#D9B43A] sm:flex"
+                className="hidden rounded-md bg-[#C9A227] px-5 py-2 text-sm font-semibold text-[#0D0D0D] transition hover:bg-[#D9B43A] sm:block"
               >
                 Get Started
-              </Button>
+              </Link>
             </>
           ) : (
             /* ================= LOGGED IN ================= */
-            <Dropdown placement="bottom-end">
-              <DropdownTrigger>
-                <button className="flex items-center gap-2 outline-none">
+            <Dropdown>
+              <Dropdown.Trigger>
+                <button
+                  type="button"
+                  className="flex items-center gap-2 outline-none"
+                >
                   <Avatar
                     src={user.image}
                     name={user.name}
@@ -188,70 +184,74 @@ const Navbar = () => {
                     className="hidden text-gray-400 md:block"
                   />
                 </button>
-              </DropdownTrigger>
+              </Dropdown.Trigger>
 
-              <DropdownMenu aria-label="User menu">
+              <Dropdown.Popover placement="bottom end">
+                <Dropdown.Menu>
 
-                <DropdownItem
-                  key="dashboard"
-                  startContent={<Gear width={17} height={17} />}
-                  href="/dashboard"
-                >
-                  Dashboard
-                </DropdownItem>
-
-                {user.role === "client" && (
-                  <DropdownItem
-                    key="bookings"
-                    startContent={<Briefcase width={17} height={17} />}
-                    href="/dashboard/bookings"
+                  <Dropdown.Item
+                    id="dashboard"
+                    textValue="Dashboard"
                   >
-                    My Bookings
-                  </DropdownItem>
-                )}
+                    <Gear width={17} height={17} />
+                    <Label>Dashboard</Label>
+                  </Dropdown.Item>
 
-                {user.role === "lawyer" && (
-                  <DropdownItem
-                    key="listings"
-                    startContent={<Briefcase width={17} height={17} />}
-                    href="/dashboard/my-listings"
+                  {user.role === "client" && (
+                    <Dropdown.Item
+                      id="bookings"
+                      textValue="My Bookings"
+                    >
+                      <Briefcase width={17} height={17} />
+                      <Label>My Bookings</Label>
+                    </Dropdown.Item>
+                  )}
+
+                  {user.role === "lawyer" && (
+                    <Dropdown.Item
+                      id="listings"
+                      textValue="My Listings"
+                    >
+                      <Briefcase width={17} height={17} />
+                      <Label>My Listings</Label>
+                    </Dropdown.Item>
+                  )}
+
+                  {user.role === "admin" && (
+                    <Dropdown.Item
+                      id="users"
+                      textValue="Manage Users"
+                    >
+                      <Person width={17} height={17} />
+                      <Label>Manage Users</Label>
+                    </Dropdown.Item>
+                  )}
+
+                  <Dropdown.Item
+                    id="profile"
+                    textValue="Profile"
                   >
-                    My Listings
-                  </DropdownItem>
-                )}
+                    <Person width={17} height={17} />
+                    <Label>Profile</Label>
+                  </Dropdown.Item>
 
-                {user.role === "admin" && (
-                  <DropdownItem
-                    key="users"
-                    startContent={<Person width={17} height={17} />}
-                    href="/dashboard/users"
+                  <Dropdown.Item
+                    id="logout"
+                    textValue="Logout"
+                    variant="danger"
                   >
-                    Manage Users
-                  </DropdownItem>
-                )}
+                    <LogOut width={17} height={17} />
+                    <Label>Logout</Label>
+                  </Dropdown.Item>
 
-                <DropdownItem
-                  key="profile"
-                  startContent={<Person width={17} height={17} />}
-                  href="/profile"
-                >
-                  Profile
-                </DropdownItem>
-
-                <DropdownItem
-                  key="logout"
-                  color="danger"
-                  startContent={<LogOut width={17} height={17} />}
-                >
-                  Logout
-                </DropdownItem>
-
-              </DropdownMenu>
+                </Dropdown.Menu>
+              </Dropdown.Popover>
             </Dropdown>
           )}
 
           {/* ================= MOBILE BUTTON ================= */}
           <button
+            type="button"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#333] text-gray-300 hover:text-white lg:hidden"
             aria-label="Toggle menu"
@@ -265,29 +265,28 @@ const Navbar = () => {
         </div>
       </div>
 
-      
+      {/* ================= MOBILE MENU ================= */}
       {isMenuOpen && (
-        <div className="border-t border-[#292929] bg-[#0D0D0D] lg:hidden textenter">
+        <div className="border-t border-[#292929] bg-[#0D0D0D] lg:hidden">
           <div className="mx-auto max-w-7xl space-y-2 px-4 py-5 sm:px-6">
 
             {/* Mobile Search */}
-            <Input
-              placeholder="Search lawyers by name or specialization..."
-              startContent={
+            <InputGroup className="w-full">
+              <InputGroup.Prefix>
                 <Magnifier
                   width={18}
                   height={18}
                   className="text-gray-500"
                 />
-              }
-              classNames={{
-                inputWrapper:
-                  "bg-[#181818] border border-[#333]",
-                input: "text-white placeholder:text-gray-500",
-              }}
-            />
+              </InputGroup.Prefix>
 
-            {/* Links */}
+              <InputGroup.Input
+                placeholder="Search lawyers by name or specialization..."
+                className="h-10 bg-[#181818] text-white placeholder:text-gray-500"
+              />
+            </InputGroup>
+
+            {/* ================= MOBILE LINKS ================= */}
             <div className="pt-3">
               {navLinks.map((link) => {
                 const Icon = link.icon;
@@ -310,7 +309,6 @@ const Navbar = () => {
                 );
               })}
 
-              {/* Dashboard */}
               {user && (
                 <Link
                   href="/dashboard"
@@ -323,9 +321,10 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Mobile Auth */}
+            {/* ================= MOBILE AUTH ================= */}
             {!user ? (
               <div className="grid grid-cols-2 gap-3 pt-3">
+
                 <Link
                   href="/login"
                   onClick={() => setIsMenuOpen(false)}
@@ -341,9 +340,11 @@ const Navbar = () => {
                 >
                   Get Started
                 </Link>
+
               </div>
             ) : (
               <button
+                type="button"
                 className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-red-900/50 py-3 text-sm font-medium text-red-400"
                 onClick={() => {
                   // Add logout function here
@@ -354,6 +355,7 @@ const Navbar = () => {
                 Logout
               </button>
             )}
+
           </div>
         </div>
       )}
