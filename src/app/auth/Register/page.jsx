@@ -1,0 +1,217 @@
+
+"use client";
+
+import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+
+const Register = () => {
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const onsubmit = async (e) => {
+    e.preventDefault();
+
+    setError("");
+    setLoading(true);
+
+    const formdata = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formdata.entries());
+
+    if (user.password !== user.confirmPassword) {
+      setError("Passwords do not match.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const { data, error } = await authClient.signUp.email({
+        email: user.email,
+        password: user.password,
+        name: user.name,
+      });
+
+      console.log({ data, error });
+
+      if (error) {
+        setError(error.message || "Registration failed.");
+        return;
+      }
+
+      if (data) {
+        alert("Registration successful!");
+        router.push("/");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#f8f5ef] px-4 py-10">
+      <div className="mx-auto flex min-h-[90vh] max-w-6xl items-center justify-center">
+        <div className="grid w-full max-w-5xl overflow-hidden rounded-3xl bg-white shadow-xl lg:grid-cols-2">
+          <div className="hidden bg-[#22333b] p-12 text-white lg:flex lg:flex-col lg:justify-between">
+            <div>
+              <div className="mb-10">
+                <h1 className="text-3xl font-bold tracking-tight">
+                  LegalEase
+                </h1>
+                <p className="mt-2 text-sm text-[#eae0d5]">
+                  Your trusted legal connection platform.
+                </p>
+              </div>
+
+              <h2 className="max-w-md text-4xl font-semibold leading-tight">
+                Get the legal help you need,
+                <span className="text-[#c6ac8f]">
+                  {" "}
+                  when you need it.
+                </span>
+              </h2>
+
+              <p className="mt-6 max-w-md leading-7 text-gray-300">
+                Connect with qualified lawyers or join LegalEase as a legal
+                professional and grow your practice.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+              <p className="text-sm leading-6 text-gray-300">
+                "LegalEase makes finding the right legal professional simple,
+                transparent, and accessible."
+              </p>
+            </div>
+          </div>
+
+          <div className="p-6 sm:p-10 lg:p-12">
+            <div className="mb-8">
+              <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-[#7d7236]">
+                Get Started
+              </p>
+
+              <h2 className="text-3xl font-bold text-[#22333b]">
+                Create your account
+              </h2>
+
+              <p className="mt-2 text-sm text-gray-500">
+                Join LegalEase and get started today.
+              </p>
+            </div>
+
+            {error && (
+              <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+                {error}
+              </div>
+            )}
+
+            <form className="space-y-5" onSubmit={onsubmit}>
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-700">
+                  Full Name
+                </label>
+
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  placeholder="Enter your full name"
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-black outline-none transition placeholder:text-gray-400 focus:border-[#7d7236] focus:bg-white focus:ring-2 focus:ring-[#7d7236]/10"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-700">
+                  Email Address
+                </label>
+
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="you@example.com"
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-black outline-none transition placeholder:text-gray-400 focus:border-[#7d7236] focus:bg-white focus:ring-2 focus:ring-[#7d7236]/10"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-700">
+                  Password
+                </label>
+
+                <input
+                  type="password"
+                  name="password"
+                  required
+                  minLength={6}
+                  placeholder="Create a password"
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-black outline-none transition placeholder:text-gray-400 focus:border-[#7d7236] focus:bg-white focus:ring-2 focus:ring-[#7d7236]/10"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-700">
+                  Confirm Password
+                </label>
+
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  required
+                  minLength={6}
+                  placeholder="Confirm your password"
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-black outline-none transition placeholder:text-gray-400 focus:border-[#7d7236] focus:bg-white focus:ring-2 focus:ring-[#7d7236]/10"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-xl bg-[#22333b] py-3.5 font-semibold text-white shadow-sm transition hover:bg-[#18272d] hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {loading ? "Creating Account..." : "Create Account"}
+              </button>
+            </form>
+
+            <div className="my-6 flex items-center gap-4">
+              <div className="h-px flex-1 bg-gray-200" />
+              <span className="text-xs font-medium text-gray-400">OR</span>
+              <div className="h-px flex-1 bg-gray-200" />
+            </div>
+
+            <button
+              type="button"
+              className="flex w-full items-center justify-center gap-3 rounded-xl border border-gray-200 bg-white py-3.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+            >
+              <span className="text-lg font-bold">G</span>
+              Continue with Google
+            </button>
+
+            <p className="mt-7 text-center text-sm text-gray-500">
+              Already have an account?{" "}
+              <Link
+                href="/auth/Login"
+                className="font-semibold text-[#7d7236] hover:underline"
+              >
+                Sign in
+              </Link>
+            </p>
+
+            <p className="mt-5 text-center text-xs leading-5 text-gray-400">
+              By creating an account, you agree to our Terms of Service and
+              Privacy Policy.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Register;
