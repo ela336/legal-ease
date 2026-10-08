@@ -32,6 +32,7 @@ const Register = () => {
         email: user.email,
         password: user.password,
         name: user.name,
+        role: user.role,
       });
 
       console.log({ data, error });
@@ -52,17 +53,27 @@ const Register = () => {
       setLoading(false);
     }
   };
+  const handleGoogle = async () => {
+  setError("");
+  await authClient.signIn.social({
+    provider: "google",
+    callbackURL: "/",
+    newUserCallbackURL: "/auth/choose-role", 
+  });
+};
 
   return (
     <div className="min-h-screen bg-[#f8f5ef] px-4 py-10">
       <div className="mx-auto flex min-h-[90vh] max-w-6xl items-center justify-center">
         <div className="grid w-full max-w-5xl overflow-hidden rounded-3xl bg-white shadow-xl lg:grid-cols-2">
+
           <div className="hidden bg-[#22333b] p-12 text-white lg:flex lg:flex-col lg:justify-between">
             <div>
               <div className="mb-10">
                 <h1 className="text-3xl font-bold tracking-tight">
                   LegalEase
                 </h1>
+
                 <p className="mt-2 text-sm text-[#eae0d5]">
                   Your trusted legal connection platform.
                 </p>
@@ -71,8 +82,7 @@ const Register = () => {
               <h2 className="max-w-md text-4xl font-semibold leading-tight">
                 Get the legal help you need,
                 <span className="text-[#c6ac8f]">
-                  {" "}
-                  when you need it.
+                  {" "}when you need it.
                 </span>
               </h2>
 
@@ -91,6 +101,7 @@ const Register = () => {
           </div>
 
           <div className="p-6 sm:p-10 lg:p-12">
+
             <div className="mb-8">
               <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-[#7d7236]">
                 Get Started
@@ -112,6 +123,7 @@ const Register = () => {
             )}
 
             <form className="space-y-5" onSubmit={onsubmit}>
+
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
                   Full Name
@@ -138,6 +150,56 @@ const Register = () => {
                   placeholder="you@example.com"
                   className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-black outline-none transition placeholder:text-gray-400 focus:border-[#7d7236] focus:bg-white focus:ring-2 focus:ring-[#7d7236]/10"
                 />
+              </div>
+
+            
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-700">
+                  I want to join as
+                </label>
+
+                <div className="grid grid-cols-2 gap-3">
+
+                  <label className="cursor-pointer">
+                    <input
+                      type="radio"
+                      name="role"
+                      value="user"
+                      defaultChecked
+                      className="peer sr-only"
+                    />
+
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-4 text-center transition peer-checked:border-[#7d7236] peer-checked:bg-[#7d7236]/10 peer-checked:ring-2 peer-checked:ring-[#7d7236]/10 hover:bg-white">
+                      <p className="font-semibold text-gray-800">
+                        User
+                      </p>
+
+                      <p className="mt-1 text-xs text-gray-500">
+                        Find & hire lawyers
+                      </p>
+                    </div>
+                  </label>
+
+                  <label className="cursor-pointer">
+                    <input
+                      type="radio"
+                      name="role"
+                      value="lawyer"
+                      className="peer sr-only"
+                    />
+
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-4 text-center transition peer-checked:border-[#7d7236] peer-checked:bg-[#7d7236]/10 peer-checked:ring-2 peer-checked:ring-[#7d7236]/10 hover:bg-white">
+                      <p className="font-semibold text-gray-800">
+                        Lawyer
+                      </p>
+
+                      <p className="mt-1 text-xs text-gray-500">
+                        Offer legal services
+                      </p>
+                    </div>
+                  </label>
+
+                </div>
               </div>
 
               <div>
@@ -177,15 +239,19 @@ const Register = () => {
               >
                 {loading ? "Creating Account..." : "Create Account"}
               </button>
+
             </form>
 
             <div className="my-6 flex items-center gap-4">
               <div className="h-px flex-1 bg-gray-200" />
-              <span className="text-xs font-medium text-gray-400">OR</span>
+              <span className="text-xs font-medium text-gray-400">
+                OR
+              </span>
               <div className="h-px flex-1 bg-gray-200" />
             </div>
 
             <button
+            onClick={handleGoogle}
               type="button"
               className="flex w-full items-center justify-center gap-3 rounded-xl border border-gray-200 bg-white py-3.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
             >
@@ -207,6 +273,7 @@ const Register = () => {
               By creating an account, you agree to our Terms of Service and
               Privacy Policy.
             </p>
+
           </div>
         </div>
       </div>

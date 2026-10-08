@@ -26,15 +26,15 @@ const Login = () => {
         password: user.password,
       });
 
-      console.log({ data, error });
-
       if (error) {
         setError(error.message || "Invalid email or password.");
         return;
       }
 
       if (data) {
-        router.push("/");
+        const role = data.user?.role;
+        router.push(role === "lawyer" || role === "admin" ? "/dashboard" : "/");
+        router.refresh();
       }
     } catch (err) {
       console.error(err);
@@ -49,12 +49,11 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const { data, error } = await authClient.signIn.social({
+      const { error } = await authClient.signIn.social({
         provider: "google",
         callbackURL: "/",
+        newUserCallbackURL: "/auth/choose-role",
       });
-
-      console.log({ data, error });
 
       if (error) {
         setError(error.message || "Google login failed.");
@@ -148,17 +147,10 @@ const Login = () => {
 
               {/* Password */}
               <div>
-                <div className="mb-2 flex items-center justify-between">
+                <div className="mb-2">
                   <label className="block text-sm font-medium text-gray-700">
                     Password
                   </label>
-
-                  <Link
-                    href="/forgot-password"
-                    className="text-xs font-semibold text-[#7d7236] hover:underline"
-                  >
-                    Forgot password?
-                  </Link>
                 </div>
 
                 <input

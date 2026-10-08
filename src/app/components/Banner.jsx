@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const slides = [
   {
-    title: "Find the Right Lawyer",
+    title: "Find & Hire Expert Legal Counsel",
     description: "Connect with qualified lawyers for your legal needs.",
     icon: "⚖️",
   },
