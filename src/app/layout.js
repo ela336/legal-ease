@@ -1,7 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+
+import { Toaster } from "react-hot-toast";
+import SiteChrome from "@/app/components/SiteChrome";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,11 +26,10 @@ export default function RootLayout({ children }) {
       data-theme="dark"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark `}
     >
-      <body className="min-h-full flex flex-col">
-        <Navbar></Navbar>
-        {children}
-        <Footer></Footer>
-      </body>
+     <body className="min-h-full flex flex-col">
+  <SiteChrome>{children}</SiteChrome>
+  <Toaster position="top-right" />
+</body>
     </html>
   );
 }
