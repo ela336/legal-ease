@@ -17,7 +17,7 @@ export default function ChooseRole() {
   };
 
   const options = [
-    { value: "user", title: "User", desc: "Find & hire lawyers" },
+    { value: "user", title: "User", desc: "Find & hire " },
     { value: "lawyer", title: "Lawyer", desc: "Offer legal services" },
   ];
 

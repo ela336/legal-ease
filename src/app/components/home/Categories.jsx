@@ -38,7 +38,7 @@ export default function Categories() {
                 whileHover={{ scale: 1.05 }}
               >
                 <Link
-                  href={`/lawyers?category=${encodeURIComponent(category)}`}
+                  href={`/lawyer?category=${encodeURIComponent(category)}`}
                   className="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center transition hover:border-[#C9A227] hover:shadow-md"
                 >
                   <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#0D0D0D] text-[#C9A227]">

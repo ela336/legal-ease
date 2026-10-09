@@ -15,7 +15,7 @@ export default function LawyerCard({ lawyer, index = 0 }) {
       whileHover={{ scale: 1.03 }}
     >
       <Link
-        href={`/lawyers/${lawyer._id}`}
+        href={`/lawyer/${lawyer._id}`}
         className="relative flex h-full flex-col items-center rounded-2xl border border-gray-200 bg-white p-5 text-center shadow-sm transition hover:shadow-lg"
       >
         {busy && (

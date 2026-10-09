@@ -9,7 +9,7 @@ import { authClient } from "@/lib/auth-client";
 
 const links = [
   { name: "Home", href: "/" },
-  { name: "Browse Lawyers", href: "/lawyers" },
+  { name: "Browse Lawyers", href: "/lawyer" },
   { name: "About", href: "/about" },
 ];
 
@@ -37,7 +37,7 @@ const Navbar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim()) {
-      router.push(`/lawyers?search=${encodeURIComponent(query.trim())}`);
+      router.push(`/lawyer?search=${encodeURIComponent(query.trim())}`);
       setOpen(false);
     }
   };

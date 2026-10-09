@@ -45,7 +45,7 @@ export default function TopExperts() {
                 whileHover={{ scale: 1.04 }}
               >
                 <Link
-                  href={`/lawyers/${lawyer._id}`}
+                  href={`/lawyer/${lawyer._id}`}
                   className="flex flex-col items-center rounded-2xl border border-white/10 bg-[#181818] p-6 text-center transition hover:border-[#C9A227]"
                 >
                   <div className="relative">

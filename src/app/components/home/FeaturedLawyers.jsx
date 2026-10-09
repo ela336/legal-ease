@@ -52,7 +52,7 @@ export default function FeaturedLawyers() {
 
         <div className="mt-10 text-center">
           <Link
-            href="/lawyers"
+            href="/lawyer"
             className="inline-block rounded-lg border border-[#22333b] px-6 py-3 text-sm font-semibold text-[#22333b] transition hover:bg-[#22333b] hover:text-white"
           >
             View all lawyers

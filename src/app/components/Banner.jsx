@@ -75,7 +75,7 @@ const Banner = () => {
             </p>
 
             <Link
-              href="/lawyers"
+              href="/lawyer"
               className="mt-7 inline-block rounded-lg bg-[#C9A227] px-7 py-3 font-semibold text-[#0D0D0D] transition hover:bg-[#D9B43A]"
             >
               Browse Lawyers
