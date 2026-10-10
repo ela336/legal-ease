@@ -106,7 +106,7 @@ export default function MyComments() {
         <div className="rounded-2xl bg-white p-12 text-center shadow-sm">
           <MessageSquare size={40} className="mx-auto text-gray-300" />
           <p className="mt-3 text-sm text-gray-500">
-            You haven't commented yet. Once a lawyer accepts your request, you can leave a comment on their profile.
+            You have not commented yet. Once a lawyer accepts your request, you can leave a comment on their profile.
           </p>
           <Link
             href="/dashboard/user/hiring-history"
