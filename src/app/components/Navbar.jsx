@@ -10,7 +10,7 @@ import { authClient } from "@/lib/auth-client";
 const links = [
   { name: "Home", href: "/" },
   { name: "Browse Lawyers", href: "/lawyer" },
-  { name: "About", href: "/about" },
+ 
 ];
 
 const Navbar = () => {
