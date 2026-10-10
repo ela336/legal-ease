@@ -30,12 +30,21 @@ export default function UserHiringHistory() {
       .finally(() => setLoading(false));
   }, [isClient, isPending]);
 
-  // Stripe checkout is added in the next step
-  const handlePay = async (hire) => {
-    setPayingId(hire._id);
-    toast("Payment will be connected in the next step");
+  
+ const handlePay = async (hire) => {
+  setPayingId(hire._id);
+  try {
+    const { url } = await apiFetch("/api/payments/create-checkout-session", {
+      method: "POST",
+      auth: true,
+      body: { hireId: hire._id },
+    });
+    window.location.href = url;
+  } catch (err) {
+    toast.error(err.message);
     setPayingId(null);
-  };
+  }
+};
 
   if (isPending) return <div className="h-64 animate-pulse rounded-2xl bg-gray-200" />;
 
