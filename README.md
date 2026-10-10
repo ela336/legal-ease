@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# LegalEase - Online Lawyer Hiring Platform
 
-## Getting Started
+LegalEase is a full-stack marketplace that connects clients and businesses with
+talented lawyers. Clients browse, hire and pay lawyers online, lawyers publish
+and manage their legal services, and an admin oversees users, listings,
+transactions and platform analytics.
 
-First, run the development server:
+## Live Links
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ **Live site** -> https://legal-ease-eight-sage.vercel.app
+ 
+## Purpose
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Traditional legal hiring is mostly limited to law firms and physical
+consultations. LegalEase makes legal help easier to reach: users can discover
+lawyers, compare fees and availability, and hire securely online, while
+emerging lawyers can reach new clients and manage their services in one place.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How It Works
 
-## Learn More
+1. A visitor browses lawyers, filters by specialization, fee and availability, and opens a profile.
+2. A **client** registers, sends a hiring request and waits for the lawyer's decision.
+3. The **lawyer** reviews requests in their dashboard and accepts or rejects them.
+4. Once accepted, the client pays the consultation fee through Stripe and the request shows **Paid**.
+5. A client with an accepted hire can comment on the lawyer's profile.
+6. The **admin** manages users and roles, moderates lawyer listings, and reviews transactions and analytics.
 
-To learn more about Next.js, take a look at the following resources:
+## Key Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Authentication and security**
+- Email/password and Google sign-in (Better Auth)
+- Role selection at registration: Client or Lawyer (admins are promoted in the database)
+- Role-based dashboards for Client, Lawyer and Admin
+- JWT-secured API calls, with the user's role checked on the server for every protected route
+- Protected dashboard routes that survive page reloads
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Public pages**
+- Home page with an animated hero slider, featured lawyers, top legal experts and a legal categories grid
+- Browse Lawyers with search, category filter, fee range, availability filter, sorting and pagination
+- Skeleton loaders, friendly empty states and error handling
+- Lawyer details page with a hire confirmation modal and a comments section
+- About, Contact and Privacy Policy pages, plus a footer with quick links, social icons and a newsletter form
 
-## Deploy on Vercel
+**Client dashboard**
+- Profile overview and profile update (name and photo)
+- Hiring history with pending, accepted and rejected statuses
+- Stripe payment after a lawyer accepts, with a disabled "Paid" state
+- Comment management (edit and delete)
+- Transaction history
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Lawyer dashboard**
+- Create, edit and delete legal profiles with imgBB photo upload
+- Toggle availability (Available / Busy) and publish or unpublish a profile
+- Accept or reject hiring requests
+- Earnings and transaction history
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Admin dashboard**
+- Manage users: change roles and delete accounts
+- Manage lawyer listings: publish, unpublish and delete
+- View all transactions
+- Analytics with stat cards and charts (users, lawyers, hires, revenue)
+
+**Experience**
+- Comments restricted to clients with an accepted hire, verified against the hiring record on the server
+- Framer Motion animations (hero fade-in, staggered card reveal, hover effects)
+- Responsive layout with a mobile menu and a slide-in dashboard sidebar
+- Custom loading page, 404 page, error boundary and toast notifications
+
+##  Technologies Used
+
+- Next.js
+- React
+- Tailwind CSS
+- DaisyUI
+- Express.js
+- MongoDB
+- Better Auth
+- JWT
+- Vercel
+
+
+
+
+
+
+
+
+
+
+
+## Test Payments
+
+Payments run in Stripe test mode. Use the card `4242 4242 4242 4242` with any
+future expiry date and any 3-digit CVC.
+
