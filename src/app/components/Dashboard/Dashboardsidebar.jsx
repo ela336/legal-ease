@@ -28,6 +28,7 @@ const Dashboardsidebar = ({ open, onClose }) => {
   const userLinks = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { name: "Hiring History", href: "/dashboard/user/hiring-history", icon: BriefcaseBusiness },
+    { name: "Transactions", href: "/dashboard/user/transactions", icon: CreditCard },
     { name: "Update Profile", href: "/dashboard/user/update-profile", icon: UserRound },
     { name: "My Comments", href: "/dashboard/user/comments", icon: MessageSquare },
   ];
@@ -36,13 +37,17 @@ const Dashboardsidebar = ({ open, onClose }) => {
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { name: "Hiring History", href: "/dashboard/lawyer/hiring-history", icon: BriefcaseBusiness },
     { name: "Manage Legal Profile", href: "/dashboard/lawyer/manage-legal-profile", icon: Scale },
+    { name: "Earnings", href: "/dashboard/lawyer/transactions", icon: CreditCard },
+    { name: "Update Profile", href: "/dashboard/user/update-profile", icon: UserRound },
   ];
 
   const adminLinks = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { name: "Manage Users", href: "/dashboard/admin/manage-users", icon: Users },
+    { name: "Lawyer Listings", href: "/dashboard/admin/lawyer-listings", icon: Scale },
     { name: "All Transactions", href: "/dashboard/admin/all-transactions", icon: CreditCard },
     { name: "Analytics", href: "/dashboard/admin/analytics", icon: BarChart3 },
+    { name: "Update Profile", href: "/dashboard/user/update-profile", icon: UserRound },
   ];
 
   let links = userLinks;
@@ -116,7 +121,7 @@ const Dashboardsidebar = ({ open, onClose }) => {
 
               return (
                 <Link
-                  key={link.href}
+                  key={link.href + link.name}
                   href={link.href}
                   onClick={onClose}
                   className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition ${
