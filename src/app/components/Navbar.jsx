@@ -11,6 +11,7 @@ import ThemeToggle from "./ThemeToggle";
 const links = [
   { name: "Home", href: "/" },
   { name: "Browse Lawyers", href: "/lawyer" },
+  { name: "About", href: "/about" },
 ];
 
 const Navbar = () => {
