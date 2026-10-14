@@ -6,11 +6,11 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, Search } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import ThemeToggle from "./ThemeToggle";
 
 const links = [
   { name: "Home", href: "/" },
   { name: "Browse Lawyers", href: "/lawyer" },
- 
 ];
 
 const Navbar = () => {
@@ -85,6 +85,7 @@ const Navbar = () => {
         </form>
 
         <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
           {isPending && !error ? (
             <div className="h-9 w-24 animate-pulse rounded-lg bg-[#292929]" />
           ) : session?.user ? (
@@ -132,6 +133,9 @@ const Navbar = () => {
               className="w-full rounded-lg border border-[#333] bg-[#181818] px-3 py-2 text-sm text-white outline-none focus:border-[#C9A227]"
             />
           </form>
+
+          <ThemeToggle variant="row" />
+
           {links.map((l) => (
             <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className={`block ${linkClass(l.href)}`}>
               {l.name}

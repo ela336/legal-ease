@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import ThemeToggle from "@/app/components/ThemeToggle";
 import {
   LayoutDashboard,
   BriefcaseBusiness,
@@ -140,6 +141,8 @@ const Dashboardsidebar = ({ open, onClose }) => {
 
         {/* Bottom */}
         <div className="border-t border-white/10 p-4">
+          <ThemeToggle variant="row" />
+
           <Link
             href="/"
             onClick={onClose}
